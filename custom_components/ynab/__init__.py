@@ -243,10 +243,10 @@ class YnabData:
             for category in month.categories:
 
                 self.hass.data[DOMAIN_DATA].update(
-                    [(category.name, category.balance / 1000)]
+                    [("category_"+category.name, category.balance / 1000)]
                 )
                 self.hass.data[DOMAIN_DATA].update(
-                    [(category.name+ "_budgeted", category.budgeted / 1000)]
+                    [("category_"+category.name+ "_budgeted", category.budgeted / 1000)]
                 )
                 _LOGGER.debug(
                     "Received data for categories: %s",

@@ -58,19 +58,11 @@ class ynabSensor(Entity):
             "overspent_categories"
         )
 
+        categories = {k.strip("category_"):v for k,v in self.hass.data[DOMAIN_DATA].items() if k.startswith("category_")}
         # category attributes
-        if self._categories is not None:
-            for category in self._categories:
-                if self.hass.data[DOMAIN_DATA].get(category) is not None:
-                    self.attr[category.replace(" ", "_").lower()] = self.hass.data[
-                        DOMAIN_DATA
-                    ].get(category)
-                    self.attr[
-                        (category + "_budgeted").replace(" ", "_").lower()
-                    ] = self.hass.data[DOMAIN_DATA].get(category + "_budgeted")
-                else:
-                    category_error = CATEGORY_ERROR.format(category=category)
-                    _LOGGER.error(category_error)
+    
+        for category, values in categories.items():
+            self.attr[category.replace(" ", "_").lower()] = values
 
         if self._accounts is not None:
             for account in self._accounts:
