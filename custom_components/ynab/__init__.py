@@ -241,25 +241,16 @@ class YnabData:
 
             # get remaining category balances
             for category in month.categories:
-                if category.name not in self.categories:
-                    continue
-                if category.id not in self.categories: 
-                    continue 
-
-                if category.name in self.categories:
-                    NAMEFIELD = category.name
-                else:
-                    NAMEFIELD = category.id
 
                 self.hass.data[DOMAIN_DATA].update(
-                    [(NAMEFIELD, category.balance / 1000)]
+                    [(category.name, category.balance / 1000)]
                 )
                 self.hass.data[DOMAIN_DATA].update(
-                    [(NAMEFIELD+ "_budgeted", category.budgeted / 1000)]
+                    [(category.name+ "_budgeted", category.budgeted / 1000)]
                 )
                 _LOGGER.debug(
                     "Received data for categories: %s",
-                    [NAMEFIELD, category.balance / 1000, category.budgeted / 1000],
+                    [category.name, category.balance / 1000, category.budgeted / 1000],
                 )
 
     async def request_import(self):
