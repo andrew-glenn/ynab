@@ -246,7 +246,7 @@ class YnabData:
                 spent = budgeted - remaining 
 
                 self.hass.data[DOMAIN_DATA].update(
-                    [("category_"+category.name+"_remaining", spent)]
+                    [("category_"+category.name+"_remaining", remaining)]
                 )
                 self.hass.data[DOMAIN_DATA].update(
                     [("category_"+category.name+ "_budgeted", budgeted)]
