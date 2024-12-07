@@ -243,7 +243,10 @@ class YnabData:
             for category in month.categories:
                 activity = category.activity / 1000
                 budgeted = category.budgeted / 1000
-                spent = budgeted - activity 
+                if activity < 0:
+                    spent = budgeted + activity 
+                else:
+                    spent = budgeted - activity
 
                 self.hass.data[DOMAIN_DATA].update(
                     [("category_"+category.name+"_remaining", remaining)]
