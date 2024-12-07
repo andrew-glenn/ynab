@@ -241,9 +241,9 @@ class YnabData:
 
             # get remaining category balances
             for category in month.categories:
-                remaining = category.balance / 1000
+                activity = category.activity / 1000
                 budgeted = category.budgeted / 1000
-                spent = budgeted - remaining 
+                spent = budgeted - activity 
 
                 self.hass.data[DOMAIN_DATA].update(
                     [("category_"+category.name+"_remaining", remaining)]
