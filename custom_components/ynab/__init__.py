@@ -257,7 +257,7 @@ class YnabData:
                     [("category_"+category.name+ "_budgeted", budgeted)]
                 )
                 self.hass.data[DOMAIN_DATA].update(
-                    [("category_"+category.name+ "_spent", spent)]
+                    [("category_"+category.name+ "_spent", activity)]
 
                 )
                 _LOGGER.debug(
