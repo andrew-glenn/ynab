@@ -248,6 +248,8 @@ class YnabData:
                 else:
                     spent = budgeted - activity
 
+                remaining = budgeted - spent
+
                 self.hass.data[DOMAIN_DATA].update(
                     [("category_"+category.name+"_remaining", remaining)]
                 )
