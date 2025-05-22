@@ -190,8 +190,6 @@ class YnabData:
 
         # get accounts
         for account in self.get_data.accounts:
-            if account.name not in self.accounts:
-                continue
 
             self.hass.data[DOMAIN_DATA].update([(account.name, account.balance / 1000)])
             _LOGGER.debug(
