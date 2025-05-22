@@ -109,8 +109,10 @@ class YnabData:
         self.ynab = None
         self.all_budgets = None
         self.get_all_budgets = None
+        self.get_all_accounts = None
         self.raw_budget = None
         self.get_data = None
+        self.all_accounts = None 
 
     @Throttle(MIN_TIME_BETWEEN_UPDATES)
     async def update_data(self):
@@ -126,9 +128,13 @@ class YnabData:
         self.raw_budget = await self.hass.async_add_executor_job(
             self.ynab.budgets.get_budget, self.budget
         )
+        self.all_accounts = await self.hass.async_add_executor_job(
+            self.ynab.accounts.get_accounts, self.budget
+        )
 
         # get budget summary
         self.get_all_budgets = self.all_budgets.data.budgets
+        self.get_all_accounts = self.all_accounts.data.accounts
         if self.get_all_budgets:
             _LOGGER.debug("Found %s budgets", len(self.get_all_budgets))
             for budget in self.get_all_budgets:
@@ -190,6 +196,13 @@ class YnabData:
 
         # get accounts
         for account in self.get_data.accounts:
+
+            self.hass.data[DOMAIN_DATA].update([(account.name, account.balance / 1000)])
+            _LOGGER.debug(
+                "Received data for account: %s",
+                [account.name, account.balance / 1000],
+            )
+        for account in self.get_all_accounts:
 
             self.hass.data[DOMAIN_DATA].update([(account.name, account.balance / 1000)])
             _LOGGER.debug(
