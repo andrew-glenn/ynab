@@ -59,22 +59,23 @@ class ynabSensor(Entity):
         )
 
         categories = {k.replace("category_", ""):v for k,v in self.hass.data[DOMAIN_DATA].items() if k.startswith("category_")}
+        accounts = [k for k,v in self.hass.data[DOMAIN_DATA].items() if k.startswith("account_")]
+
         # category attributes
-    
         for category, values in categories.items():
             if category[1] == "_":
                 category = category[2:]
             self.attr[category.replace(" ", "_").lower()] = values
 
-        if self._accounts is not None:
-            for account in self._accounts:
-                if self.hass.data[DOMAIN_DATA].get(account) is not None:
-                    self.attr[account.replace(" ", "_").lower()] = self.hass.data[
-                        DOMAIN_DATA
-                    ].get(account)
-                else:
-                    account_error = ACCOUNT_ERROR.format(account=account)
-                    _LOGGER.error(account_error)
+        
+        for account in accounts:
+            if self.hass.data[DOMAIN_DATA].get(account) is not None:
+                self.attr[account.replace(" ", "_").lower()] = self.hass.data[
+                    DOMAIN_DATA
+                ].get(account)
+            else:
+                account_error = ACCOUNT_ERROR.format(account=account)
+                _LOGGER.error(account_error)
 
     @property
     def should_poll(self):

@@ -194,17 +194,9 @@ class YnabData:
             (self.hass.data[DOMAIN_DATA]["total_balance"]),
         )
 
-        # get accounts
-        for account in self.get_data.accounts:
-
-            self.hass.data[DOMAIN_DATA].update([(account.name, account.balance / 1000)])
-            _LOGGER.debug(
-                "Received data for account: %s",
-                [account.name, account.balance / 1000],
-            )
         for account in self.get_all_accounts:
 
-            self.hass.data[DOMAIN_DATA].update([(account.name, account.balance / 1000)])
+            self.hass.data[DOMAIN_DATA].update([("account_"+account.name, account.balance / 1000)])
             _LOGGER.debug(
                 "Received data for account: %s",
                 [account.name, account.balance / 1000],
